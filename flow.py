@@ -3,6 +3,7 @@ from datetime import timedelta
 from prefect import task, Flow
 from prefect.tasks.secrets import PrefectSecret
 from prefect.environments.storage import GitHub
+from prefect.run_configs import KubernetesRun
 
 import requests
 
@@ -31,3 +32,7 @@ storage = GitHub(
 with Flow(name="Pull My YNAB Transactions", storage=storage) as flow:
     API_KEY = PrefectSecret("YNAB_API_KEY")
     result = ping_ynab_to_import_transactions(api_key=API_KEY)
+
+flow.run_config = KubernetesRun(
+    image="prefecthq/prefect:all_extras", cpu_request=1, memory_request="2Gi"
+)
