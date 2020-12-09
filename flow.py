@@ -24,7 +24,7 @@ def ping_ynab_to_import_transactions(api_key):
 
 storage = GitHub(
     repo="dylanbhughes/pull-my-ynab-transactions",
-    path="my_flow.py",
+    path="flow.py",
     secrets=["YNAB_GITHUB_ACCESS_TOKEN"],
 )
 
