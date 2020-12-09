@@ -28,6 +28,6 @@ storage = GitHub(
     secrets=["YNAB_GITHUB_ACCESS_TOKEN"],
 )
 
-with Flow(name="Ping YNAB", storage=storage) as flow:
+with Flow(name="Pull My YNAB Transactions", storage=storage) as flow:
     API_KEY = PrefectSecret("YNAB_API_KEY")
     result = ping_ynab_to_import_transactions(api_key=API_KEY)
