@@ -1,8 +1,9 @@
-from prefect import task, Flow
-from prefect.schedules import CronSchedule
-from prefect.tasks.secrets import Secret
-import requests
 from datetime import timedelta
+
+from prefect import task, Flow
+from prefect.tasks.secrets import PrefectSecret
+
+import requests
 
 
 @task(
@@ -19,8 +20,6 @@ def ping_ynab_to_import_transactions(api_key):
     return response
 
 
-schedule = CronSchedule(cron="0 * * * *")
-
-with Flow(name="Ping YNAB", schedule=schedule) as flow:
-    API_KEY = Secret("YNAB_API_KEY")
+with Flow(name="Ping YNAB") as flow:
+    API_KEY = PrefectSecret("YNAB_API_KEY")
     result = ping_ynab_to_import_transactions(api_key=API_KEY)
